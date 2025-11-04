@@ -1,0 +1,48 @@
+version: 2
+
+sources:
+  - name: sales
+    database: sales_dbt
+    schema: raw 
+    tables:
+      - name: customer
+        columns:
+          - name: customerkey
+            tests:
+              - not_null
+
+      - name: date
+        columns:
+          - name: datekey
+            tests:
+              - not_null
+
+      - name: product
+        columns:
+          - name: productkey
+            tests:
+              - not_null
+
+      - name: reseller
+        columns:
+          - name: resellerkey
+            tests:
+              - not_null
+
+      - name: sales
+        columns:
+          - name: salesorderlinekey
+            tests:
+              - not_null
+
+      - name: sales_order_line
+        columns:
+          - name: salesorderlinekey
+            tests:
+              - not_null
+
+      - name: territory
+        columns:
+          - name: salesterritorykey
+            tests:
+              - not_null
