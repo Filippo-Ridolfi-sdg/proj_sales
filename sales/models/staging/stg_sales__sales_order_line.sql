@@ -1,16 +1,18 @@
-with 
+{{ config(
+    materialized='incremental',
+    unique_key='salesorderlinekey'
+) }}
 
-source as (
-    select
-        *
-    from {{ source('sales', 'sales_order_line') }}
-),
-
-final as (
+WITH final as (
     select
         *,
-        CURRENT_TIMESTAMP() as dbt_updated_at
+        current_timestamp() as DBT_UPDATED_AT
+    from {{ source('sales', 'sales_order_line') }}
 
-    from source
+    {% if is_incremental() %}
+    -- carica solo i nuovi record non ancora presenti
+    where salesorderlinekey not in (select distinct salesorderlinekey from {{ this }})
+    {% endif %}
 )
+
 select * from final

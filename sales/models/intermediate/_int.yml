@@ -1,0 +1,267 @@
+version: 2
+
+models:
+  - name: int_sales__customer
+    description: "Modello intermedio che contiene informazioni anagrafiche sui clienti."
+    columns:
+      - name: customer_id
+        data_type: number
+        description: "Chiave primaria surrogata del cliente."
+
+      - name: customer_cd
+        data_type: varchar
+        description: "Codice identificativo univoco (chiave di business) del cliente."
+
+      - name: customer_name
+        data_type: varchar
+        description: "Nome completo o ragione sociale del cliente."
+
+      - name: customer_city
+        data_type: varchar
+        description: "Città di residenza/sede del cliente."
+
+      - name: customer_state_province
+        data_type: varchar
+        description: "Stato o provincia del cliente."
+
+      - name: customer_country_region
+        data_type: varchar
+        description: "Paese o regione del cliente."
+
+      - name: customer_postal_code_cd
+        data_type: varchar
+        description: "Codice postale del cliente."
+
+      - name: customer_dbt_updated_at
+        data_type: timestamp_ltz
+        description: "Timestamp dell'ultimo aggiornamento del record da parte di dbt."
+
+  - name: int_sales__date
+    description: "Modello intermedio per la dimensione temporale (calendario)."
+    columns:
+      - name: date_id
+        data_type: number
+        description: "Chiave primaria surrogata della data (es. AAAAANNGG)."
+
+      - name: date_value
+        data_type: date
+        description: "La data effettiva (giorno completo)."
+
+      - name: year
+        data_type: varchar
+        description: "Anno estratto dalla data."
+
+      - name: quarter
+        data_type: varchar
+        description: "Trimestre estratto dalla data (es. Q1)."
+
+      - name: month_ds
+        data_type: varchar
+        description: "Descrizione del mese (es. Gennaio 2023)."
+
+      - name: full_date_description
+        data_type: varchar
+        description: "Descrizione testuale completa della data."
+
+      - name: month_cd
+        data_type: number
+        description: "Numero del mese (da 1 a 12)."
+
+      - name: updated_at
+        data_type: timestamp_ltz
+        description: "Timestamp dell'ultimo aggiornamento del record."
+
+  - name: int_sales__product
+    description: "Modello intermedio che contiene informazioni anagrafiche sui prodotti."
+    columns:
+      - name: product_id
+        data_type: number
+        description: "Chiave primaria surrogata del prodotto."
+
+      - name: product_sku_cd
+        data_type: varchar
+        description: "Codice SKU (Stock Keeping Unit) del prodotto."
+
+      - name: product_desc
+        data_type: varchar
+        description: "Descrizione testuale del prodotto."
+
+      - name: standard_cost_std_val
+        data_type: number
+        description: "Costo standard di produzione del prodotto."
+
+      - name: product_color
+        data_type: varchar
+        description: "Colore del prodotto."
+
+      - name: list_price_usd_val
+        data_type: number
+        description: "Prezzo di listino del prodotto in USD."
+
+      - name: product_model
+        data_type: varchar
+        description: "Modello specifico del prodotto."
+
+      - name: product_subcategory
+        data_type: varchar
+        description: "Sottocategoria di appartenenza del prodotto."
+
+      - name: product_category
+        data_type: varchar
+        description: "Categoria di appartenenza del prodotto."
+
+      - name: product_dbt_updated_at
+        data_type: timestamp_ltz
+        description: "Timestamp dell'ultimo aggiornamento del record da parte di dbt."
+
+  - name: int_sales__reseller
+    description: "Modello intermedio che contiene informazioni anagrafiche sui rivenditori."
+    columns:
+      - name: reseller_id
+        data_type: number
+        description: "Chiave primaria surrogata del rivenditore."
+
+      - name: reseller_cd
+        data_type: varchar
+        description: "Codice identificativo univoco (chiave di business) del rivenditore."
+
+      - name: reseller_business_type
+        data_type: varchar
+        description: "Tipologia di business del rivenditore (es. Warehouse, VAR)."
+
+      - name: reseller_name
+        data_type: varchar
+        description: "Nome o ragione sociale del rivenditore."
+
+      - name: reseller_city
+        data_type: varchar
+        description: "Città di sede del rivenditore."
+
+      - name: reseller_state_province
+        data_type: varchar
+        description: "Stato o provincia del rivenditore."
+
+      - name: reseller_country_region
+        data_type: varchar
+        description: "Paese o regione del rivenditore."
+
+      - name: reseller_postal_code_cd
+        data_type: varchar
+        description: "Codice postale del rivenditore."
+
+      - name: reseller_dbt_updated_at
+        data_type: timestamp_ltz
+        description: "Timestamp dell'ultimo aggiornamento del record da parte di dbt."
+
+  - name: int_sales__territory
+    description: "Modello intermedio per la dimensione territorio/area geografica di vendita."
+    columns:
+      - name: sales_territory_id
+        data_type: number
+        description: "Chiave primaria surrogata del territorio di vendita."
+
+      - name: sales_territory_region
+        data_type: varchar
+        description: "Regione specifica del territorio."
+
+      - name: sales_territory_country
+        data_type: varchar
+        description: "Paese coperto dal territorio di vendita."
+
+      - name: sales_territory_groups
+        data_type: varchar
+        description: "Gruppo geografico di appartenenza (es. Europa, Nord America)."
+
+      - name: sales_territory_dbt_updated_at
+        data_type: timestamp_ltz
+        description: "Timestamp dell'ultimo aggiornamento del record da parte di dbt."
+
+  - name: int_sales__sales_order_line
+    description: "Modello intermedio che rappresenta la singola linea d'ordine di vendita."
+    columns:
+      - name: sales_channel
+        data_type: varchar
+        description: "Canale attraverso cui è avvenuta la vendita (es. Online, Rivenditore)."
+
+      - name: sales_order_line_id
+        data_type: number
+        description: "Chiave primaria surrogata della linea d'ordine."
+
+      - name: sales_order_cd
+        data_type: varchar
+        description: "Codice identificativo dell'ordine di vendita (testata)."
+
+      - name: sales_order_line_number
+        data_type: varchar
+        description: "Numero progressivo della linea all'interno dell'ordine."
+
+      - name: sales_order_line_dbt_updated_at
+        data_type: timestamp_ltz
+        description: "Timestamp dell'ultimo aggiornamento del record da parte di dbt."
+
+  - name: int_sales__sales
+    description: "Modello intermedio che modella la tabella dei fatti (fact table) delle vendite."
+    columns:
+      - name: sales_order_line_id
+        data_type: number
+        description: "Chiave esterna (FK) verso la linea d'ordine (chiave degenerata)."
+
+      - name: reseller_key_cd
+        data_type: number
+        description: "Chiave esterna (FK) verso la dimensione rivenditore."
+
+      - name: customer_key_cd
+        data_type: number
+        description: "Chiave esterna (FK) verso la dimensione cliente."
+
+      - name: product_key_cd
+        data_type: number
+        description: "Chiave esterna (FK) verso la dimensione prodotto."
+
+      - name: order_date_key_cd
+        data_type: number
+        description: "Chiave esterna (FK) verso la dimensione data (data ordine)."
+
+      - name: due_date_key_cd
+        data_type: number
+        description: "Chiave esterna (FK) verso la dimensione data (data scadenza)."
+
+      - name: ship_date_key_cd
+        data_type: number
+        description: "Chiave esterna (FK) verso la dimensione data (data spedizione)."
+
+      - name: sales_territory_key_cd
+        data_type: number
+        description: "Chiave esterna (FK) verso la dimensione territorio."
+
+      - name: order_quantity_val
+        data_type: number
+        description: "Quantità di prodotto ordinata in questa linea."
+
+      - name: unit_price_val
+        data_type: number
+        description: "Prezzo unitario del prodotto."
+
+      - name: extended_amount_val
+        data_type: number
+        description: "Importo esteso (Quantità * Prezzo Unitario)."
+
+      - name: unit_price_discount_pct
+        data_type: number
+        description: "Percentuale di sconto applicata al prezzo unitario."
+
+      - name: product_standard_cost_val
+        data_type: number
+        description: "Costo standard unitario del prodotto."
+
+      - name: total_product_cost_val
+        data_type: number
+        description: "Costo totale del prodotto (Quantità * Costo Standard)."
+
+      - name: sales_amount_val
+        data_type: number
+        description: "Importo finale della vendita (al netto degli sconti)."
+
+      - name: sales_dbt_updated_at
+        data_type: timestamp_ltz
+        description: "Timestamp dell'ultimo aggiornamento del record da parte di dbt."

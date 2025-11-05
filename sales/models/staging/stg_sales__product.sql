@@ -1,15 +1,18 @@
-with 
+{{ config(
+    materialized='incremental',
+    unique_key='productkey'
+) }}
 
-source as (
-    select
-        *
-    from {{ source('sales', 'product') }}
-),
-
-final as (
+WITH final as (
     select
         *,
-        CURRENT_TIMESTAMP() as dbt_updated_at
-    from source
+        current_timestamp() as DBT_UPDATED_AT
+    from {{ source('sales', 'product') }}
+
+    {% if is_incremental() %}
+    -- carica solo i nuovi record non ancora presenti
+    where productkey not in (select distinct productkey from {{ this }})
+    {% endif %}
 )
+
 select * from final

@@ -1,0 +1,267 @@
+version: 2
+
+models:
+  - name: stg_sales__customer
+    description: "Modello di staging per i dati anagrafici dei clienti dalla fonte 'sales'."
+    columns:
+      - name: customerkey
+        data_type: number
+        description: "Chiave primaria surrogata del cliente (dalla fonte)."
+
+      - name: customer_id
+        data_type: varchar
+        description: "Codice identificativo di business del cliente."
+
+      - name: customer
+        data_type: varchar
+        description: "Nome completo o ragione sociale del cliente."
+
+      - name: city
+        data_type: varchar
+        description: "Città di residenza/sede del cliente."
+
+      - name: state_province
+        data_type: varchar
+        description: "Stato o provincia del cliente."
+
+      - name: country_region
+        data_type: varchar
+        description: "Paese o regione del cliente."
+
+      - name: postal_code
+        data_type: varchar
+        description: "Codice postale del cliente."
+
+      - name: dbt_updated_at
+        data_type: timestamp_ltz
+        description: "Timestamp dell'ultimo aggiornamento del record da parte di dbt."
+
+  - name: stg_sales__date
+    description: "Modello di staging per la dimensione temporale (calendario) dalla fonte 'sales'."
+    columns:
+      - name: datekey
+        data_type: number
+        description: "Chiave primaria surrogata della data (es. AAAAANNGG)."
+
+      - name: date_value
+        data_type: date
+        description: "La data effettiva (giorno completo)."
+
+      - name: fiscal_year
+        data_type: varchar
+        description: "Anno fiscale."
+
+      - name: fiscal_quarter
+        data_type: varchar
+        description: "Trimestre fiscale."
+
+      - name: month
+        data_type: varchar
+        description: "Descrizione del mese."
+
+      - name: full_date_string
+        data_type: varchar
+        description: "Descrizione testuale completa della data."
+
+      - name: monthkey
+        data_type: number
+        description: "Chiave identificativa del mese (es. AAAAMM)."
+
+      - name: dbt_updated_at
+        data_type: timestamp_ltz
+        description: "Timestamp dell'ultimo aggiornamento del record da parte di dbt."
+
+  - name: stg_sales__product
+    description: "Modello di staging per i dati anagrafici dei prodotti dalla fonte 'sales'."
+    columns:
+      - name: productkey
+        data_type: number
+        description: "Chiave primaria surrogata del prodotto (dalla fonte)."
+
+      - name: sku
+        data_type: varchar
+        description: "Codice SKU (Stock Keeping Unit) del prodotto."
+
+      - name: product
+        data_type: varchar
+        description: "Nome o descrizione del prodotto."
+
+      - name: standard_cost
+        data_type: varchar
+        description: "Costo standard di produzione del prodotto."
+
+      - name: color
+        data_type: varchar
+        description: "Colore del prodotto."
+
+      - name: list_price
+        data_type: varchar
+        description: "Prezzo di listino del prodotto."
+
+      - name: model
+        data_type: varchar
+        description: "Modello specifico del prodotto."
+
+      - name: subcategory
+        data_type: varchar
+        description: "Sottocategoria di appartenenza del prodotto."
+
+      - name: category
+        data_type: varchar
+        description: "Categoria di appartenenza del prodotto."
+
+      - name: dbt_updated_at
+        data_type: timestamp_ltz
+        description: "Timestamp dell'ultimo aggiornamento del record da parte di dbt."
+
+  - name: stg_sales__reseller
+    description: "Modello di staging per i dati anagrafici dei rivenditori dalla fonte 'sales'."
+    columns:
+      - name: resellerkey
+        data_type: number
+        description: "Chiave primaria surrogata del rivenditore (dalla fonte)."
+
+      - name: reseller_id
+        data_type: varchar
+        description: "Codice identificativo di business del rivenditore."
+
+      - name: business_type
+        data_type: varchar
+        description: "Tipologia di business del rivenditore."
+
+      - name: reseller
+        data_type: varchar
+        description: "Nome o ragione sociale del rivenditore."
+
+      - name: city
+        data_type: varchar
+        description: "Città di sede del rivenditore."
+
+      - name: state_province
+        data_type: varchar
+        description: "Stato o provincia del rivenditore."
+
+      - name: country_region
+        data_type: varchar
+        description: "Paese o regione del rivenditore."
+
+      - name: postal_code
+        data_type: varchar
+        description: "Codice postale del rivenditore."
+
+      - name: dbt_updated_at
+        data_type: timestamp_ltz
+        description: "Timestamp dell'ultimo aggiornamento del record da parte di dbt."
+
+  - name: stg_sales__territory
+    description: "Modello di staging per la dimensione territorio di vendita dalla fonte 'sales'."
+    columns:
+      - name: salesterritorykey
+        data_type: number
+        description: "Chiave primaria surrogata del territorio di vendita (dalla fonte)."
+
+      - name: region
+        data_type: varchar
+        description: "Regione specifica del territorio."
+
+      - name: country
+        data_type: varchar
+        description: "Paese coperto dal territorio di vendita."
+
+      - name: territorygroup
+        data_type: varchar
+        description: "Gruppo geografico di appartenenza (es. Europa)."
+
+      - name: dbt_updated_at
+        data_type: timestamp_ltz
+        description: "Timestamp dell'ultimo aggiornamento del record da parte di dbt."
+
+  - name: stg_sales__sales_order_line
+    description: "Modello di staging per i dettagli della linea d'ordine (dimensione degenerata)."
+    columns:
+      - name: channel
+        data_type: varchar
+        description: "Canale di vendita (es. Online, Rivenditore)."
+
+      - name: salesorderlinekey
+        data_type: number
+        description: "Chiave primaria surrogata della linea d'ordine (dalla fonte)."
+
+      - name: sales_order_id
+        data_type: varchar
+        description: "Codice identificativo dell'ordine di vendita (testata)."
+
+      - name: sales_order_line
+        data_type: varchar
+        description: "Numero progressivo della linea all'interno dell'ordine."
+
+      - name: dbt_updated_at
+        data_type: timestamp_ltz
+        description: "Timestamp dell'ultimo aggiornamento del record da parte di dbt."
+
+  - name: stg_sales__sales
+    description: "Modello di staging per la tabella dei fatti (fact table) delle vendite dalla fonte 'sales'."
+    columns:
+      - name: salesorderlinekey
+        data_type: number
+        description: "Chiave della linea d'ordine (dimensione degenerata)."
+
+      - name: resellerkey
+        data_type: number
+        description: "Chiave esterna (FK) verso il rivenditore."
+
+      - name: customerkey
+        data_type: number
+        description: "Chiave esterna (FK) verso il cliente."
+
+      - name: productkey
+        data_type: number
+        description: "Chiave esterna (FK) verso il prodotto."
+
+      - name: orderdatekey
+        data_type: number
+        description: "Chiave esterna (FK) verso la data (data ordine)."
+
+      - name: duedatekey
+        data_type: number
+        description: "Chiave esterna (FK) verso la data (data scadenza)."
+
+      - name: shipdatekey
+        data_type: number
+        description: "Chiave esterna (FK) verso la data (data spedizione)."
+
+      - name: salesterritorykey
+        data_type: number
+        description: "Chiave esterna (FK) verso il territorio."
+
+      - name: order_quantity
+        data_type: number
+        description: "Quantità ordinata."
+
+      - name: unit_price
+        data_type: varchar
+        description: "Prezzo unitario."
+
+      - name: extended_amount
+        data_type: varchar
+        description: "Importo esteso (Quantità * Prezzo Unitario)."
+
+      - name: unit_price_discount_pct
+        data_type: varchar
+        description: "Percentuale di sconto applicata al prezzo unitario."
+
+      - name: product_standard_cost
+        data_type: varchar
+        description: "Costo standard unitario del prodotto."
+
+      - name: total_product_cost
+        data_type: varchar
+        description: "Costo totale del prodotto (Quantità * Costo Standard)."
+
+      - name: sales_amount
+        data_type: varchar
+        description: "Importo finale della vendita (al netto degli sconti)."
+
+      - name: dbt_updated_at
+        data_type: timestamp_ltz
+        description: "Timestamp dell'ultimo aggiornamento del record da parte di dbt."

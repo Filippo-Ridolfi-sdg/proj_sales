@@ -1,16 +1,18 @@
-with 
+{{ config(
+    materialized='incremental',
+    unique_key='salesterritorykey'
+) }}
 
-source as (
-    select
-        *
-    from {{ source('sales', 'territory') }}
-),
-
-final as (
+WITH final as (
     select
         *,
-    CURRENT_TIMESTAMP() as dbt_updated_at
+        current_timestamp() as DBT_UPDATED_AT
+    from {{ source('sales', 'territory') }}
 
-    from source
+    {% if is_incremental() %}
+    -- carica solo i nuovi record non ancora presenti
+    where salesterritorykey not in (select distinct salesterritorykey from {{ this }})
+    {% endif %}
 )
+
 select * from final
