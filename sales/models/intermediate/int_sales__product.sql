@@ -23,6 +23,8 @@ refined as (
         model as product_model,
         subcategory as product_subcategory,
         category as product_category,
+        dbt_updated_at as product_dbt_updated_at
+        
     from staging_products
 )
 

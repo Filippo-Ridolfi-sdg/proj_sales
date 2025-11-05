@@ -1,0 +1,101 @@
+version: 2
+
+sources:
+  - name: sales
+    database: sales_dbt
+    schema: raw 
+    tables:
+
+      - name: customer
+        columns:
+          - name: customerkey  
+            tests:
+              - not_null: {}  
+              - unique: {}  
+
+      - name: date
+        columns:
+          - name: datekey    
+            tests:
+              - not_null: {}
+              - unique: {}    
+
+      - name: product
+        columns:
+          - name: productkey   
+            tests:
+              - not_null: {}
+              - unique: {}   
+
+      - name: reseller
+        columns:
+          - name: resellerkey  
+            tests:
+              - not_null: {}
+              - unique: {}   
+
+      - name: territory
+        columns:
+          - name: salesterritorykey 
+            tests:
+              - not_null: {}
+              - unique: {}   
+
+      - name: sales_order_line
+        columns:
+          - name: salesorderlinekey 
+            tests:
+              - not_null: {}
+              - unique: {}    
+              - relationships:
+                  to: source('sales', 'sales')
+                  field: salesorderlinekey
+
+      - name: sales
+        columns:
+          - name: salesorderlinekey 
+            tests:
+              - not_null: {}
+              - unique: {}    
+
+          - name: resellerkey
+            tests:
+              - relationships:
+                  to: source('sales', 'reseller')
+                  field: resellerkey
+
+          - name: customerkey
+            tests:
+              - relationships:
+                  to: source('sales', 'customer')
+                  field: customerkey
+
+          - name: productkey
+            tests:
+              - relationships:
+                  to: source('sales', 'product')
+                  field: productkey
+
+          - name: orderdatekey
+            tests:
+              - relationships:
+                  to: source('sales', 'date')
+                  field: datekey   
+
+          - name: DueDatekey
+            tests:
+              - relationships:
+                  to: source('sales', 'date')
+                  field: datekey
+
+          - name: shipdatekey
+            tests:
+              - relationships:
+                  to: source('sales', 'date')
+                  field: datekey
+
+          - name: salesterritorykey 
+            tests:
+              - relationships:
+                  to: source('sales', 'territory')
+                  field: salesterritorykey

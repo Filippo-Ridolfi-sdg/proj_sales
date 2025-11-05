@@ -11,7 +11,8 @@ refined as (
         fiscal_quarter as quarter,
         month as month_ds,
         full_date_string as full_date_description, 
-        monthkey as month_cd
+        monthkey as month_cd,
+        dbt_updated_at as updated_at
 
     from stg_dates
 )

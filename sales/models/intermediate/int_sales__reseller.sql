@@ -12,7 +12,8 @@ refined as (
         city as reseller_city,
         state_province as reseller_state_province,
         country_region as reseller_country_region,
-        postal_code as reseller_postal_code_cd
+        postal_code as reseller_postal_code_cd,
+        dbt_updated_at as reseller_dbt_updated_at
 
     from stg_resellers
 )

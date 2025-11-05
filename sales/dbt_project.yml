@@ -43,6 +43,6 @@ models:
       +materialized: table
 
     # Configurazione per la cartella: models/final_models/
-    final_models:
-      +schema: final_models
+    marts:
+      +schema: marts
       +materialized: table

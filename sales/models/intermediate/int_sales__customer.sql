@@ -11,7 +11,8 @@ refined as (
         city as customer_city,
         state_province as customer_state_province,
         country_region as customer_country_region,
-        postal_code as customer_postal_code_cd
+        postal_code as customer_postal_code_cd,
+        dbt_updated_at as customer_dbt_updated_at
 
     from stg_customers
 )

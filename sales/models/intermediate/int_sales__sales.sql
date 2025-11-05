@@ -44,7 +44,8 @@ refined as (
         try_cast(
             replace(replace(sales_amount, '$', ''), ',', '')
             as decimal(18, 2)
-        ) as sales_amount_val
+        ) as sales_amount_val,
+        dbt_updated_at as sales_dbt_updated_at
 
     from stg_sales
 )

@@ -9,7 +9,8 @@ renamed as (
         SALESTERRITORYKEY as sales_territory_id,
         region as sales_territory_region,
         country as sales_territory_country,
-        TERRITORYGROUP as sales_territory_group
+        TERRITORYGROUP as sales_territory_groups,
+        dbt_updated_at as sales_territory_dbt_updated_at
 
     from source
 )

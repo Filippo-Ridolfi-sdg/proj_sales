@@ -6,7 +6,9 @@ with source as (
 
 renamed as (
 
-    select *
+    select *,
+    CURRENT_TIMESTAMP() as dbt_updated_at
+
 
     from source
 
